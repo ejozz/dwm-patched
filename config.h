@@ -48,6 +48,7 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 #define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
 #include "vanitygaps.c"
+#include <X11/XF86keysym.h> 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "鸞",      dwindle },    /* first entry is default */
@@ -73,7 +74,13 @@ static const char *termcmd[]  = { "alacritty", NULL };
 static const char *rangercmd[]  = { "alacritty", "-e", "ranger", NULL };
 static const char *roficmd[] = { "rofi", "-show", "drun", NULL };
 static const char *browsercmd[]  = { "qutebrowser", NULL };
+static const char *emailcmd[]  = { "thunderbird", NULL };
 static const char *nmcmd[]  = { "networkmanager_dmenu", NULL };
+static const char *volup[]  = { "/home/ejozz/Documents/Scripts/changevolume.sh", "5", NULL };
+static const char *voldown[]  = { "/home/ejozz/Documents/Scripts/changevolume.sh", "-5", NULL };
+static const char *volmute[]  = { "pulsemixer", "--toggle-mute", NULL };
+static const char *brightnessup[]  = { "/home/ejozz/Documents/Scripts/changebrightness.sh", "500", NULL };
+static const char *brightnessdown[]  = { "/home/ejozz/Documents/Scripts/changebrightness.sh", "-500", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -82,7 +89,13 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_i,      spawn,          {.v = browsercmd } },
 	{ MODKEY,                       XK_f,      spawn,          {.v = rangercmd } },
+	{ MODKEY,                       XK_e,      spawn,          {.v = emailcmd } },
 	{ MODKEY|ShiftMask,             XK_i,      spawn,          {.v = nmcmd } },
+	{ NULL,      XF86XK_AudioRaiseVolume,      spawn,          {.v = volup } },
+	{ NULL,      XF86XK_AudioLowerVolume,      spawn,          {.v = voldown } },
+	{ NULL,             XF86XK_AudioMute,      spawn,          {.v = volmute } },
+	{ NULL,       XF86XK_MonBrightnessUp,      spawn,          {.v = brightnessup } },
+	{ NULL,     XF86XK_MonBrightnessDown,      spawn,          {.v = brightnessdown } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
